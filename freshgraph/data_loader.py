@@ -9,10 +9,17 @@ movie_genres = pandas.read_csv(
     f"{data_root_folder}/movie_genres.dat", sep="\t", encoding="ISO-8859-1")
 movie_actors = pandas.read_csv(
     f"{data_root_folder}/movie_actors.dat", sep="\t", encoding="ISO-8859-1")
+
+all_movie_tags = pandas.read_csv(
+    f"{data_root_folder}/movie_tags.dat", sep="\t", encoding="ISO-8859-1")
+movie_tags = all_movie_tags[all_movie_tags['tagWeight'] > 1]
+
 movie_meta = pandas.read_csv(
     f"{data_root_folder}/movies.dat", sep="\t", encoding="ISO-8859-1")
+
+
 # top 5 actors of each movie
-lead_actors = movie_actors[movie_actors['ranking'] <= 5]
+lead_actors = movie_actors[movie_actors['ranking'] <= 3]
 
 # training set
 movies_train = movie_meta[movie_meta['year'] < 2009]
@@ -58,6 +65,11 @@ def get_graph():
     movie_director_edges = [("m_" + str(row['movieID']), "d_" + str(row['directorID']))
                             for _, row in movie_directors.iterrows()]
 
+    tag_node_ids = [
+        "t_" + str(tag_id) for tag_id in set(movie_tags['tagID'].values)]
+    movie_tag_edges = [("t_" + str(row['movieID']), "d_" + str(row['tagID']))
+                       for _, row in movie_tags.iterrows()]
+
     g_nx = nx.Graph()  # create the graph
 
     g_nx.add_nodes_from(movie_node_ids, label="movie")
@@ -70,6 +82,9 @@ def get_graph():
 
     g_nx.add_nodes_from(directors_node_ids, label="director")
     g_nx.add_edges_from(movie_director_edges, label="movie_director")
+
+    g_nx.add_nodes_from(tag_node_ids, label="tag")
+    g_nx.add_edges_from(movie_tag_edges, label="movie_tag")
 
     print("Number of nodes {} and number of edges {} in graph.".format(
         g_nx.number_of_nodes(), g_nx.number_of_edges()))

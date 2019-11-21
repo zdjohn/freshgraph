@@ -7,6 +7,7 @@ METAPATHS = [
     ["movie", "genre", "movie"],
     ["movie", "actor", "movie"],
     ["movie", "director", "movie"],
+    ["movie", "tag", "movie"],
 ]
 
 WALK_DISTANCE = 100
