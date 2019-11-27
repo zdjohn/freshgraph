@@ -5,46 +5,46 @@ from graphScope import partitionGraph, GraphSegment, graphScope
 import time
 
 
-class Edge:
-    def __init__(self, v1, v2, timestamp):
-        self.v1 = v1
-        self.v2 = v2
-        self.timestamp = timestamp
+# class Edge:
+#     def __init__(self, v1, v2, timestamp):
+#         self.v1 = v1
+#         self.v2 = v2
+#         self.timestamp = timestamp
 
-    def __cmp__(self, other):
-        return cmp(self.timestamp, other.timestamp)
+#     def __cmp__(self, other):
+#         return cmp(self.timestamp, other.timestamp)
 
 
-def readEdges(fileName):
-    f = open(fileName, 'r')
-    for line in f:
-        pieces = line.strip().split(';')
-        edges.put(Edge(int(pieces[0]), int(pieces[1]), int(pieces[2])))
-        types[int(pieces[0])] = 0
-        types[int(pieces[1])] = 1
-    f.close()
+# def readEdges(fileName):
+#     f = open(fileName, 'r')
+#     for line in f:
+#         pieces = line.strip().split(';')
+#         edges.put(Edge(int(pieces[0]), int(pieces[1]), int(pieces[2])))
+#         types[int(pieces[0])] = 0
+#         types[int(pieces[1])] = 1
+#     f.close()
 
 
 # start!
 types = {}
 # edges = PriorityQueue()
 
-readEdges("edgelists/country_dataset_unique.txt")
+# readEdges("edgelists/country_dataset_unique.txt")
 
 graphSegments = []
 
-while(not edges.empty()):
-    edgesForTimestamp = []
-    timestamp = edges.queue[0].timestamp
-    print(timestamp)
-    while(not edges.empty() and edges.queue[0].timestamp == timestamp):
-        edge = edges.get()
-        print(edge.timestamp)
-        edgesForTimestamp.append((edge.v1, edge.v2))
-    print("change")
-    g = Graph.Bipartite(types.values(), edgesForTimestamp, directed=False)
-    g.vs["label"] = range(len(types))
-    graphSegments.append(g)
+# while(not edges.empty()):
+#     edgesForTimestamp = []
+#     timestamp = edges.queue[0].timestamp
+#     print(timestamp)
+#     while(not edges.empty() and edges.queue[0].timestamp == timestamp):
+#         edge = edges.get()
+#         print(edge.timestamp)
+#         edgesForTimestamp.append((edge.v1, edge.v2))
+#     print("change")
+#     g = Graph.Bipartite(types.values(), edgesForTimestamp, directed=False)
+#     g.vs["label"] = range(len(types))
+#     graphSegments.append(g)
 
 
 timestamp = 1

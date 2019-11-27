@@ -108,9 +108,9 @@ def findPartitionToSplit(g, nodesInPartS, nodesInPartD, part, sourceNodes, numbe
         avgEntropy = averageEntropy(
             g, nodesInPartS, nodesInPartD, part, partIndex, sourceNodes, numberOfSegments)
     # print("average entropy for partition", partIndex, "=", avgEntropy)
-    if avgEntropy > maxEntropy:
-        maxEntropy = avgEntropy
-        maxPartition = partIndex
+        if avgEntropy > maxEntropy:
+            maxEntropy = avgEntropy
+            maxPartition = partIndex
     return maxPartition
 
 
@@ -268,11 +268,12 @@ def partitionGraph(g, iterations, numberOfSegments=1):
     nodesInPartD.append(destNodes[:])
 
     # initialize destPartition so that each node is in its own partition
-    #     initialized = initializeDestPartition(destNodes, part)
-    #     part = initialized[0]
-    #     nodesInPartD = initialized[1]
+    initialized = initializeDestPartition(destNodes, part)
+    part = initialized[0]
+    nodesInPartD = initialized[1]
     for i in range(iterations):
         print("iteration", i, ":")
+
         # searchKL for source nodes
         result = searchKL(g, nodesInPartS, nodesInPartD,
                           part, sourceNodes, numberOfSegments)
@@ -291,7 +292,7 @@ def partitionGraph(g, iterations, numberOfSegments=1):
         print("source:", nodesInPartS, "\n dest:",
               nodesInPartD, "\n partitioning", part, "\n")
 
-        adj = g.get_adjacency()
+        # adj = g.get_adjacency()
         # writeMatrixToPnms(adj, 'output/initial_matrix_wo.pnm', 'output/partitioned_noise_wo_iter_' +
         #                   str(i) + '.pnm', sourceNodes, destNodes, nodesInPartS, nodesInPartD)
         # writeInitialGraphToFile(

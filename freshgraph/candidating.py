@@ -36,7 +36,7 @@ def _metapath2vec(metapath_walk):
     return model
 
 
-def get_candidates_model(graph):
+def train_candidates_model(graph):
     return _metapath2vec(_metapath_randomwalk(graph))
 
 
@@ -60,13 +60,13 @@ def sort_similar_item_by_score(item_scores_dict):
     # movie_meta.loc[movie_meta['id'].isin(similar_ids)]
 
 
-def get_ranked_user(user_item_tuple, item_scores_dict):
+def get_ranked_candidates(user_item_tuple, item_scores_dict):
     similar_item_ids = list(item_scores_dict.keys())
     connected_users = user_item_tuple.loc[user_item_tuple['movieID'].isin(
         similar_item_ids)]
     user_scores = collections.defaultdict(float)
     for _, row in connected_users.iterrows():
-        user_scores[str(int(row['userID']))
+        user_scores[int(row['userID'])
                     ] += item_scores_dict[str(int(row['movieID']))]
     return [(x[0], x[1]) for x in sorted(user_scores.items(),
                                          key=lambda kv: kv[1], reverse=True)]
