@@ -18,7 +18,7 @@ movie_meta = pandas.read_csv(
     f"{data_root_folder}/movies.dat", sep="\t", encoding="ISO-8859-1")
 
 
-# top 5 actors of each movie
+# top 3 actors of each movie
 lead_actors = movie_actors[movie_actors['ranking'] <= 3]
 
 # training set
@@ -29,8 +29,8 @@ movies_validate = movie_meta[movie_meta['year'] >= 2009]
 # user movie interactions
 movie_users = pandas.read_csv(
     f"{data_root_folder}/user_ratedmovies.dat", sep="\t", encoding="ISO-8859-1")
-positive_ratings = movie_users[movie_users['rating'] > 3]
-negative_ratings = movie_users[movie_users['rating'] < 4]
+positive_ratings = movie_users[movie_users['rating'] >= 3]
+negative_ratings = movie_users[movie_users['rating'] < 2]
 
 # exclude validation user-movie tuples
 user_item_tuple_train = positive_ratings[~positive_ratings['movieID'].isin(

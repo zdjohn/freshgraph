@@ -303,4 +303,3 @@ def partitionGraph(g, iterations, numberOfSegments=1):
     return [nodesInPartS, nodesInPartD, part]
 
 # def segmentGraphToPartitions(segment, newGraph):
-#
